@@ -5,7 +5,7 @@ import (
 )
 
 const (
-  TOKEN_ID = "DISCORD_ID"
+  TOKEN_ID = ""
 )
 
 func main() {

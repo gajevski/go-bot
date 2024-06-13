@@ -12,7 +12,6 @@ import (
 var BotToken string
 
 func Start()  {
- fmt.Println(BotToken)
  discord, err := discordgo.New("Bot " + BotToken)
  if err != nil {
    log.Fatal("Error")
@@ -27,12 +26,14 @@ func Start()  {
 }
 
 func newMessage(discord *discordgo.Session, message *discordgo.MessageCreate)  {
-  /* Prevent bot from respoding to its own messages */
+  // Prevent bot from respoding to its own messages
   if message.Author.ID == discord.State.User.ID {
     return
   }
-  switch {
-  case strings.Contains(message.Content, "!help"):
-    discord.ChannelMessageSend(message.ChannelID, "I'm bot, I'm helping!")
-  }
+ switch {
+ case strings.Contains(message.Content, "!help"):
+  discord.ChannelMessageSend(message.ChannelID, "Hello World😃")
+ case strings.Contains(message.Content, "!bye"):
+  discord.ChannelMessageSend(message.ChannelID, "Good Bye👋")
+ }
 }
