@@ -1,14 +1,18 @@
 package main
 
 import (
-  "go-bot/bot"
-)
+  "os"
+  "log"
 
-const (
-  TOKEN_ID = ""
+  "go-bot/bot"
+  "github.com/joho/godotenv"
 )
 
 func main() {
-  bot.BotToken = TOKEN_ID
+  err := godotenv.Load()
+  if err != nil {
+      log.Fatalf("Error loading .env file")
+  }
+  bot.BotToken = os.Getenv("BOT_TOKEN")
   bot.Start()
 }
