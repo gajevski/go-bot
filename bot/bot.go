@@ -4,6 +4,6 @@ import (
   "fmt"
 )
 
-func CallBot()  {
+func Start()  {
  fmt.Println("hello from bot package") 
 }
