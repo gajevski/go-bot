@@ -4,6 +4,8 @@ import (
   "fmt"
 )
 
+var BotToken string
+
 func Start()  {
- fmt.Println("hello from bot package") 
+ fmt.Println(BotToken)
 }
