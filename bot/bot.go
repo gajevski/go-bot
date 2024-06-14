@@ -26,6 +26,7 @@ func Start()  {
 }
 
 func newMessage(discord *discordgo.Session, message *discordgo.MessageCreate)  {
+  fmt.Printf("Message content: %s\n", message.Member.JoinedAt)
   // Prevent bot from respoding to its own messages
   if message.Author.ID == discord.State.User.ID {
     return
@@ -35,5 +36,8 @@ func newMessage(discord *discordgo.Session, message *discordgo.MessageCreate)  {
   discord.ChannelMessageSend(message.ChannelID, "Hello World😃")
  case strings.Contains(message.Content, "!bye"):
   discord.ChannelMessageSend(message.ChannelID, "Good Bye👋")
- }
+ case strings.Contains(message.Content, "!joined"):
+  joined := message.Member.JoinedAt.Format("2006-01-02 15:04:05")
+  discord.ChannelMessageSend(message.ChannelID, "Joined at: "+joined)
+}
 }
