@@ -43,8 +43,21 @@ func newMessage(discord *discordgo.Session, message *discordgo.MessageCreate)  {
   response := fmt.Sprintf("Joined at: %s (%d days ago)", joined, int(days))
   discord.ChannelMessageSend(message.ChannelID, response)
  case strings.Contains(message.Content, "!clear-all"):
-   messagesToDelete := []string{"1251536094705614910"}
-   discord.ChannelMessageSend(message.ChannelID, "clear-all")
-   discord.ChannelMessagesBulkDelete(message.ChannelID, messagesToDelete)
+  discord.ChannelMessageSend(message.ChannelID, "clear-all")
+
+  messages, err := discord.ChannelMessages(message.ChannelID, 100, "", "", "")
+  if err != nil {
+    log.Printf("Error getting messages: %v", err)
+    discord.ChannelMessageSend(message.ChannelID, "Error deleting all messages")
+    return
+  }
+
+  allMessagesIds := []string{}
+    
+  for _, message := range messages {
+    allMessagesIds = append(allMessagesIds, message.ID)
+  }
+
+  discord.ChannelMessagesBulkDelete(message.ChannelID, allMessagesIds)
 }
 }
