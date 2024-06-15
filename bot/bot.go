@@ -42,5 +42,9 @@ func newMessage(discord *discordgo.Session, message *discordgo.MessageCreate)  {
   days := now.Sub(message.Member.JoinedAt).Hours() / 24
   response := fmt.Sprintf("Joined at: %s (%d days ago)", joined, int(days))
   discord.ChannelMessageSend(message.ChannelID, response)
+ case strings.Contains(message.Content, "!clear-all"):
+   messagesToDelete := []string{"1251536094705614910"}
+   discord.ChannelMessageSend(message.ChannelID, "clear-all")
+   discord.ChannelMessagesBulkDelete(message.ChannelID, messagesToDelete)
 }
 }
