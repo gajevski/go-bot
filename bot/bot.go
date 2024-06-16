@@ -33,7 +33,22 @@ func newMessage(discord *discordgo.Session, message *discordgo.MessageCreate)  {
   }
  switch {
  case strings.Contains(message.Content, "!help"):
-  discord.ChannelMessageSend(message.ChannelID, "Hello World😃")
+    helpMessage := `Bot Commands
+
+**!help**
+- **Description**: Lists all available commands and their functionalities.
+- **Usage**: !help
+
+**!joined**
+- **Description**: Displays the date when the user joined the server and the number of days since they joined.
+- **Usage**: !joined
+- **Example Output**: Joined at: 2023-04-25 18:19:10 (100 days ago)
+
+**!clear-all**
+- **Description**: Sends a message indicating that all messages in the current channel will be deleted and then deletes all of messages.
+- **Usage**: !clear-all
+- **Example Output**: Deleting all messages on this channel...`
+    discord.ChannelMessageSend(message.ChannelID, helpMessage)
  case strings.Contains(message.Content, "!joined"):
   joined := message.Member.JoinedAt.Format("2006-01-02 15:04:05")
   now := time.Now()
