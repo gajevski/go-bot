@@ -34,8 +34,6 @@ func newMessage(discord *discordgo.Session, message *discordgo.MessageCreate)  {
  switch {
  case strings.Contains(message.Content, "!help"):
   discord.ChannelMessageSend(message.ChannelID, "Hello World😃")
- case strings.Contains(message.Content, "!bye"):
-  discord.ChannelMessageSend(message.ChannelID, "Good Bye👋")
  case strings.Contains(message.Content, "!joined"):
   joined := message.Member.JoinedAt.Format("2006-01-02 15:04:05")
   now := time.Now()
