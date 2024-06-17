@@ -57,6 +57,11 @@ func newMessage(discord *discordgo.Session, message *discordgo.MessageCreate)  {
   discord.ChannelMessageSend(message.ChannelID, response)
  case strings.Contains(message.Content, "!dm"):
   discord.ChannelMessageSend(message.ChannelID, "I have your bb in my DMs")
+  privateChannel, err := discord.UserChannelCreate("451390036965982209")
+  if err != nil {
+    log.Printf("Error creating private channel: %v", err)
+  }
+  discord.ChannelMessageSend(privateChannel.ID, "what's up dawg")
  case strings.Contains(message.Content, "!clear-all"):
   discord.ChannelMessageSend(message.ChannelID, "Deleting all messages on this channel...")
 
