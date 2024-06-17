@@ -55,6 +55,13 @@ func newMessage(discord *discordgo.Session, message *discordgo.MessageCreate)  {
   days := now.Sub(message.Member.JoinedAt).Hours() / 24
   response := fmt.Sprintf("Joined at: %s (%d days ago)", joined, int(days))
   discord.ChannelMessageSend(message.ChannelID, response)
+ case strings.Contains(message.Content, "!dm"):
+  discord.ChannelMessageSend(message.ChannelID, "I have your bb in my DMs")
+  privateChannel, err := discord.UserChannelCreate(message.Author.ID)
+  if err != nil {
+    log.Printf("Error creating private channel: %v", err)
+  }
+  discord.ChannelMessageSend(privateChannel.ID, "what's up dawg")
  case strings.Contains(message.Content, "!clear-all"):
   discord.ChannelMessageSend(message.ChannelID, "Deleting all messages on this channel...")
 
